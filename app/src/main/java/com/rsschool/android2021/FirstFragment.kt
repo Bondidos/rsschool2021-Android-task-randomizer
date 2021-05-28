@@ -13,6 +13,11 @@ class FirstFragment : Fragment() {
     private var generateButton: Button? = null
     private var previousResult: TextView? = null
 
+     interface onSomeEventListener{
+        fun someIvent (min :Int,max: Int,)
+    }
+    val someEventListener: onSomeEventListener
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -29,12 +34,16 @@ class FirstFragment : Fragment() {
         val result = arguments?.getInt(PREVIOUS_RESULT_KEY)
         previousResult?.text = "Previous result: ${result.toString()}"
 
-        // TODO: val min = ...
-        // TODO: val max = ...
+        val min = R.id.min_value
+        val max = R.id.max_value
 
+        //todo check for null
         generateButton?.setOnClickListener {
             // TODO: send min and max to the SecondFragment
+            Log.d("myLogs","min = $min max =$max")
+
         }
+
     }
 
     companion object {
