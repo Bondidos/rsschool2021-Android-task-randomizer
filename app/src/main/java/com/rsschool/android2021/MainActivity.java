@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-public class MainActivity extends AppCompatActivity implements FirstFragment.onSomeEventListener {
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,6 +29,10 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.onS
         transaction.replace(R.id.container,secondFragment);
         transaction.commit();
     }
-
-
+    public void callFirstFragment(int previousNumber){
+        openFirstFragment(previousNumber);
+    }
+    public void callSecondFragment(int min, int max){
+        openSecondFragment(min,max);
+    }
 }
