@@ -9,9 +9,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 public class MainActivity extends AppCompatActivity implements FirstFragment.ActionPerformedListener, SecondFragment.ActionPerformedListener {
+    /*
+    Передача данных между фрагментами (Fragments) организована через интерфейсы и Activity в качестве "хоста"
+     */
     @Override
     public void onActionPerformed(int min, int max) {
-        Log.d("myLogs","min: "+min+" , max"+max);
         openSecondFragment(min,max);
     }
     @Override
@@ -39,7 +41,4 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.Act
         transaction.replace(R.id.container,secondFragment);
         transaction.commit();
     }
-
-
-
 }
