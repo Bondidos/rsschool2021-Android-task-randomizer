@@ -1,13 +1,23 @@
 package com.rsschool.android2021;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-public class MainActivity extends AppCompatActivity implements FirstFragment.onSomeEventListener {
+public class MainActivity extends AppCompatActivity implements FirstFragment.ActionPerformedListener, SecondFragment.ActionPerformedListener {
+    @Override
+    public void onActionPerformed(int min, int max) {
+        Log.d("myLogs","min: "+min+" , max"+max);
+        openSecondFragment(min,max);
+    }
+    @Override
+    public void onActionPerformed(int previousNumber) {
+        openFirstFragment(previousNumber);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.onS
         transaction.replace(R.id.container,secondFragment);
         transaction.commit();
     }
+
 
 
 }
