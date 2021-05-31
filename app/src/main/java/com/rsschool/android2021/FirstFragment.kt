@@ -1,5 +1,6 @@
 package com.rsschool.android2021
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,6 +18,16 @@ class FirstFragment : Fragment() {
     private var minValueEdt :EditText? = null
     private var maxValueEdt :EditText? = null
 
+    interface ActionPerformedListener {
+        fun onActionPerformed(min: Int, max: Int)
+    }
+    private var listener :ActionPerformedListener? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        listener = context as ActionPerformedListener
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -33,13 +44,20 @@ class FirstFragment : Fragment() {
         maxValueEdt = view.findViewById(R.id.max_value)
 
         val result = arguments?.getInt(PREVIOUS_RESULT_KEY)
-        previousResult?.text = "Previous result: ${result.toString()}"
+        previousResult?.text = "Previous result: ${result.toString()}" //TODO add to strings
 
-        val min = minValueEdt?.text.toString().toInt()
-        val max = maxValueEdt?.text.toString().toInt()
+        var min : Int?
+        var max : Int?
+        //min=Integer.parseInt(minValueEdt?.text.toString())
+
 
         generateButton?.setOnClickListener {
-            (activity as MainActivity?)?.callSecondFragment(min,max)
+            min = minValueEdt?.text.toString().toIntOrNull()
+            max = maxValueEdt?.text.toString().toIntOrNull()
+            Log.d("myLogs", "$min , $max")
+            if(min !=null && max !=null)
+                listener?.onActionPerformed(min!!, max!!)
+            //todo Check for min != max && min !> max use Toast
         }
     }
 

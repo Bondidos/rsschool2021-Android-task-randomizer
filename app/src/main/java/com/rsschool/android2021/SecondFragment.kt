@@ -1,7 +1,7 @@
 package com.rsschool.android2021
 
+import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +14,12 @@ class SecondFragment : Fragment() {
 
     private var backButton: Button? = null
     private var result: TextView? = null
+    private var listener : ActionPerformedListener? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        listener = context as ActionPerformedListener
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,20 +35,18 @@ class SecondFragment : Fragment() {
         backButton = view.findViewById(R.id.back)
 
         val min = arguments?.getInt(MIN_VALUE_KEY) ?: 0
-        Log.d("myLogs","$min")
-//        val max = arguments?.getInt(MAX_VALUE_KEY) ?: 0
-//        Log.d("myLogs","$max")
+        val max = arguments?.getInt(MAX_VALUE_KEY) ?: 0
 
-       // result?.text = generate(min, 90).toString()
+        result?.text = generate(min, max).toString()
 
         backButton?.setOnClickListener {
-            // TODO: implement back
+            listener?.onActionPerformed(result?.text.toString().toInt())
         }
     }
 
-//    private fun generate(min: Int, max: Int): Int {
-//        return Random.nextInt(min,max)
-//    }
+    private fun generate(min: Int, max: Int)= Random.nextInt(min,max) //todo ADD 1 TO MAX?
+
+
 
     companion object {
 
@@ -50,7 +54,6 @@ class SecondFragment : Fragment() {
         fun newInstance(min: Int, max: Int): SecondFragment {
             val fragment = SecondFragment()
             val args = Bundle()
-            Log.d("myLogs"," min is $min max is $max")
             args.putInt(MIN_VALUE_KEY,min)
             args.putInt(MAX_VALUE_KEY,max)
             fragment.arguments = args
@@ -60,5 +63,8 @@ class SecondFragment : Fragment() {
 
         private const val MIN_VALUE_KEY = "MIN_VALUE"
         private const val MAX_VALUE_KEY = "MAX_VALUE"
+    }
+    interface ActionPerformedListener {
+        fun onActionPerformed(previousNumber: Int)
     }
 }
